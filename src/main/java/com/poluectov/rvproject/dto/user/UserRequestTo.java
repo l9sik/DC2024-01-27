@@ -11,11 +11,12 @@ import java.math.BigInteger;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestTo extends IdentifiedEntity {
 
+    private Long id;
     @Size(min = 2, max = 64)
     String login;
     @Size(min = 8, max = 128)

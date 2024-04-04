@@ -8,10 +8,6 @@ import com.poluectov.rvproject.repository.exception.EntityNotFoundException;
 import com.poluectov.rvproject.utils.dtoconverter.DtoConverter;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
-import java.util.List;
-import java.util.function.Function;
-
 @Component
 public class InMemoryMessageRepository extends InMemoryRepository<Message, MessageRequestTo> implements MessageRepository {
 
@@ -24,7 +20,7 @@ public class InMemoryMessageRepository extends InMemoryRepository<Message, Messa
 
     @Override
     public Message save(MessageRequestTo request) throws EntityNotFoundException {
-        if (issueRepository.find(request.getIssueId()) == null){
+        if (issueRepository.findById(request.getIssueId()) == null){
             throw new EntityNotFoundException("Issue with id " + request.getIssueId() + " not found");
         }
 

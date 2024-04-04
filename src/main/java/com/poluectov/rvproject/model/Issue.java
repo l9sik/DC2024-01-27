@@ -2,10 +2,7 @@ package com.poluectov.rvproject.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -15,9 +12,15 @@ import java.util.Optional;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "tbl_issue")
 public class Issue extends IdentifiedEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     private User user;

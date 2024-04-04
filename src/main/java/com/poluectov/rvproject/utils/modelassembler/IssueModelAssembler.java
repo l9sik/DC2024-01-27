@@ -24,7 +24,7 @@ public class IssueModelAssembler implements RepresentationModelAssembler<IssueRe
                 linkTo(methodOn(IssueController.class).all()).withRel("issues"));
 
         if (entity.getMarkers() != null) {
-            for (BigInteger marker : entity.getMarkers()) {
+            for (Long marker : entity.getMarkers()) {
                 model.add(linkTo(methodOn(MarkerController.class).one(marker)).withRel("markers"));
             }
         }

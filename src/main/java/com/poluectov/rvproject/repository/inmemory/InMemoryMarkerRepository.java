@@ -17,7 +17,7 @@ public class InMemoryMarkerRepository extends InMemoryRepository<Marker, MarkerR
     }
 
     @Override
-    public List<Marker> findAll(List<BigInteger> markerIds) {
+    public List<Marker> findAll(List<Long> markerIds) {
         if (markerIds == null){
             return null;
         }

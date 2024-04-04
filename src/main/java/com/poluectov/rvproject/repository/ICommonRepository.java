@@ -1,7 +1,6 @@
 package com.poluectov.rvproject.repository;
 
 import com.poluectov.rvproject.model.IdentifiedEntity;
-import com.poluectov.rvproject.model.User;
 import com.poluectov.rvproject.repository.exception.EntityNotFoundException;
 
 import java.math.BigInteger;
@@ -18,7 +17,7 @@ public interface ICommonRepository<Entity extends IdentifiedEntity, Request exte
     Entity save(Request entity) throws EntityNotFoundException;
 
     Entity update(Request entity) throws EntityNotFoundException;
-    void delete(BigInteger id) throws EntityNotFoundException;
+    void deleteById(Long id) throws EntityNotFoundException;
 
-    Entity find(BigInteger id) throws EntityNotFoundException;
+    Entity findById(Long id) throws EntityNotFoundException;
 }

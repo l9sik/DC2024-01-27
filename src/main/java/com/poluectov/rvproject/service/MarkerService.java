@@ -4,15 +4,19 @@ import com.poluectov.rvproject.dto.marker.MarkerRequestTo;
 import com.poluectov.rvproject.dto.marker.MarkerResponseTo;
 import com.poluectov.rvproject.model.Marker;
 import com.poluectov.rvproject.repository.MarkerRepository;
+import com.poluectov.rvproject.repository.jpa.JpaMarkerRepository;
+import com.poluectov.rvproject.utils.dtoconverter.MarkerRequestDtoConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.Optional;
 
 @Component
 public class MarkerService extends CommonRestService<Marker, MarkerRequestTo, MarkerResponseTo> {
-    public MarkerService(MarkerRepository repository) {
-        super(repository);
+    public MarkerService(JpaMarkerRepository repository,
+                         MarkerRequestDtoConverter dtoConverter) {
+        super(repository, dtoConverter);
     }
 
     @Override
@@ -26,4 +30,8 @@ public class MarkerService extends CommonRestService<Marker, MarkerRequestTo, Ma
                 .build());
     }
 
+    @Override
+    void update(Marker one, Marker found) {
+        one.setName(found.getName());
+    }
 }

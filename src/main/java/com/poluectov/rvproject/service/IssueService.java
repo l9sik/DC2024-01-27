@@ -6,6 +6,8 @@ import com.poluectov.rvproject.dto.marker.MarkerResponseTo;
 import com.poluectov.rvproject.model.Issue;
 import com.poluectov.rvproject.model.Marker;
 import com.poluectov.rvproject.repository.IssueRepository;
+import com.poluectov.rvproject.repository.jpa.JpaIssueRepository;
+import com.poluectov.rvproject.utils.dtoconverter.IssueRequestDtoConverter;
 import com.poluectov.rvproject.utils.dtoconverter.MarkerResponseDtoConverter;
 import com.poluectov.rvproject.utils.dtoconverter.UserResponseDtoConverter;
 import lombok.AllArgsConstructor;
@@ -18,20 +20,15 @@ import java.util.Optional;
 @Component
 public class IssueService extends CommonRestService<Issue, IssueRequestTo, IssueResponseTo> {
 
-    UserResponseDtoConverter userResponseDtoConverter;
-    MarkerResponseDtoConverter markerResponseDtoConverter;
-    public IssueService(IssueRepository repository,
-                        UserResponseDtoConverter userResponseDtoConverter,
-                        MarkerResponseDtoConverter markerResponseDtoConverter) {
-        super(repository);
-        this.userResponseDtoConverter = userResponseDtoConverter;
-        this.markerResponseDtoConverter = markerResponseDtoConverter;
+    public IssueService(JpaIssueRepository repository,
+                        IssueRequestDtoConverter dtoConverter) {
+        super(repository, dtoConverter);
     }
 
     @Override
     Optional<IssueResponseTo> mapResponseTo(Issue message) {
         List<Marker> markerList = message.getMarkers();
-        List<BigInteger> markers = null;
+        List<Long> markers = null;
         if (markerList != null) {
             markers = markerList.stream().map(Marker::getId).toList();
         }
@@ -44,5 +41,18 @@ public class IssueService extends CommonRestService<Issue, IssueRequestTo, Issue
                 .modified(message.getModified())
                 .markers(markers)
                 .build());
+    }
+
+    @Override
+    void update(Issue one, Issue found) {
+        one.setUser(found.getUser());
+
+        one.setTitle(found.getTitle());
+
+        one.setContent(found.getContent());
+        one.setCreated(found.getCreated());
+        one.setModified(found.getModified());
+
+        one.setMarkers(found.getMarkers());
     }
 }

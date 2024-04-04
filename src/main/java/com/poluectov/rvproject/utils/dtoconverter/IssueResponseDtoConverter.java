@@ -20,7 +20,7 @@ public class IssueResponseDtoConverter implements DtoConverter<Issue, IssueRespo
     @Override
     public IssueResponseTo convert(Issue issue) {
         List<Marker> markerList = issue.getMarkers();
-        List<BigInteger> markers = null;
+        List<Long> markers = null;
         if (markerList != null) {
             markers = markerList.stream().map(Marker::getId).toList();
         }

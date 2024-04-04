@@ -9,5 +9,5 @@ import java.util.List;
 @Component
 public interface MarkerRepository extends ICommonRepository<Marker, MarkerRequestTo> {
 
-    List<Marker> findAll(List<BigInteger> markerIds);
+    List<Marker> findAll(List<Long> markerIds);
 }

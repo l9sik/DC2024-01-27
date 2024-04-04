@@ -10,17 +10,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigInteger;
 
-@Entity
-@Data
-@SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
-public class IdentifiedEntity {
+public abstract class IdentifiedEntity {
 
-    @Nullable
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true)
-    private BigInteger id = null;
-
+    public abstract Long getId();
+    public abstract void setId(Long id);
 }

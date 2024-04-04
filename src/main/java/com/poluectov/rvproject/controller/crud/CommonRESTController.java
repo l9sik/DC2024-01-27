@@ -64,7 +64,7 @@ public class CommonRESTController<Entity extends IdentifiedEntity,
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> one(@PathVariable("id") BigInteger id) {
+    public ResponseEntity<?> one(@PathVariable("id") Long id) {
         EntityModel<Response> entityModel = assembler.apply(service.one(id).orElse(null));
 
         return ResponseEntity
@@ -77,7 +77,7 @@ public class CommonRESTController<Entity extends IdentifiedEntity,
     @ResponseStatus(HttpStatus.OK)
     public Response /*ResponseEntity<?>*/ updateEntity(
                                         @RequestBody Request request) {
-        BigInteger id = request.getId();
+        Long id = request.getId();
 
         Optional<Response> user = service.update(id, request);
 
@@ -92,7 +92,7 @@ public class CommonRESTController<Entity extends IdentifiedEntity,
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEntity(@PathVariable("id") BigInteger id) {
+    public ResponseEntity<?> deleteEntity(@PathVariable("id") Long id) {
 
         service.delete(id);
 

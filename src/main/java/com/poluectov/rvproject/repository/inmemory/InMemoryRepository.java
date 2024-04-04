@@ -16,8 +16,8 @@ import java.util.concurrent.ConcurrentMap;
 @NoArgsConstructor
 public abstract class InMemoryRepository<Entity extends IdentifiedEntity, Request extends IdentifiedEntity> {
 
-    protected ConcurrentMap<BigInteger, Entity> data;
-    BigInteger lastId = BigInteger.ONE;
+    protected ConcurrentMap<Long, Entity> data;
+    Long lastId = 1L;
 
     DtoConverter<Request, Entity> convert;
 
@@ -33,7 +33,7 @@ public abstract class InMemoryRepository<Entity extends IdentifiedEntity, Reques
     public Entity save(Request request) throws EntityNotFoundException {
         if (request.getId() == null || request.getId().equals(BigInteger.ZERO)) {
             request.setId(lastId);
-            lastId = lastId.add(BigInteger.ONE);
+            lastId = lastId + (1l);
         }
         if (data.containsKey(request.getId())) {
             throw new EntityNotFoundException(getEntityName() + " with id " + request.getId() + " already exists");
@@ -52,14 +52,14 @@ public abstract class InMemoryRepository<Entity extends IdentifiedEntity, Reques
         return entity;
     }
 
-    public void delete(BigInteger id) throws EntityNotFoundException {
+    public void deleteById(Long id) throws EntityNotFoundException {
         if (!data.containsKey(id)){
             throw new EntityNotFoundException(getEntityName() + " with id " + id + " not found");
         }
         data.remove(id);
     }
 
-    public Entity find(BigInteger id) throws EntityNotFoundException {
+    public Entity findById(Long id) throws EntityNotFoundException {
         if (!data.containsKey(id)){
             throw new EntityNotFoundException(getEntityName() + " with id " + id + " not found");
         }
